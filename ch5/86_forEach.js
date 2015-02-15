@@ -1,6 +1,6 @@
 'use strict';
 var a = [1, 2, 3, 4, 5];
-var b = ["this", "is", "a", "test"];
+var b = ["this", "is", "a", "great", "test"];
 
 function logEach(array) {
   for (var i = 0; i < array.length; i++) {
