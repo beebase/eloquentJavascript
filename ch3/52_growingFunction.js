@@ -48,52 +48,55 @@ function printFarmInventory3(cows, chickens, pigs) {
 printFarmInventory3(7, 16, 3);
 
 console.log("\n#############################\n");
-
-function printFarmInventory4(cows, chickens) {
-  var result = "";
+/**
+ *
+ * @param {Number} cows
+ * @param {Number} chickens
+ * @returns {string}
+ */
+function printFarmDirectory4(cows, chickens) {
+  var result;
   var cowString = String(cows);
   while (cowString.length < 3) {
     cowString = "0" + cowString;
   }
-  result += cowString + " Cows\n";
   var chickenString = String(chickens);
   while (chickenString.length < 3) {
     chickenString = "0" + chickenString;
   }
-  result += chickenString + " Chickens";
+  result = cowString + " Cows\n" + chickenString + " ChickenString";
   return result;
 }
-console.log(printFarmInventory4(10, 20));
+console.log(printFarmDirectory4(10, 20));
 
-function printZeroPaddedWithLabel5(size, label) {
-  var result = "";
-
-  for (var i = 0; i < size; i++) {
-    result = "0" + size;
+function printZeroPaddedWithLabel5(number, label) {
+  var result;
+  var numberString = String(number);
+  while (numberString.length < 3) {
+    numberString = "0" + numberString;
   }
-  result += " " + label + "\n";
+  result = numberString + " " + label + "\n";
   return result;
 }
-function printFarmInventory5(cows, chickens) {
+function printFarmDirectory5(cows, chickens) {
   var result = "";
   result += printZeroPaddedWithLabel5(cows, "Cows");
   result += printZeroPaddedWithLabel5(chickens, "Chickens");
   return result;
 }
-console.log(printFarmInventory5(30, 40));
+console.log(printFarmDirectory5(30, 40));
 
-function zeroPadded6(number, size) {
-  var result  = String(number) ;
+function printZeroPadded6(number, size) {
+  var result = String(number);
   while (result.length < size) {
     result = "0" + result;
   }
   return result;
 }
-function printFarmInventory6(cows, chickens) {
+function printFarmInventory(cows, chickens) {
   var result = "";
-  result += zeroPadded6(cows, 5) + " Cows\n";
-  result += zeroPadded6(chickens, 5) + " Chickens";
-
+  result += printZeroPadded6(cows, 8) + " Cows\n";
+  result += printZeroPadded6(chickens, 8) + " Chickens\n";
   return result;
 }
-console.log(printFarmInventory6(50, 60));
+console.log(printFarmInventory(50,60));

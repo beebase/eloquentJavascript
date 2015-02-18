@@ -23,11 +23,11 @@ console.log(x, y);    // 50 10
 
 console.log("\n___________________________\n\n");
 
-function multiplier(nr) {
+function multiplier_ (nr) {
   return function(test) {
     return nr * test;
   }                  ;
 }
-var times7 = multiplier(7);
+var times7 = multiplier_(7);
 
 console.log(times7(11));

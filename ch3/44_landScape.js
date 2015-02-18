@@ -74,16 +74,14 @@ console.log(landscape2(2, 5, 2, 8));
 
 console.log("___________________\n");
 
-function landscape5() {
-
-  function flat(size) {
+function landscape5 () {
+  function flat (size) {
     var result = "";
     for (var i = 0; i < size; i++) {
-      result += "_";
+          result += "_";
     }
     return result;
   }
-
   function mountain(size) {
     var result = "/";
     for (var i = 0; i < size; i++) {
@@ -92,21 +90,19 @@ function landscape5() {
     result += "\\";
     return result;
   }
-
-  function build(args) {
+  function build(array) {
     var result = "";
-    for (var i = 0; i < args.length; i++) {
-      var size = args[i];
-      console.log(size);
-      if (i % 2 === 0) {
-        result += flat(args[i]);
-      } else {
-        result += mountain(args[i]);
+    for (var i = 0 ; i < array.length; i++) {
+
+      var l = array[i];
+      if(i % 2 === 0) {
+        result += flat(l);
+      }           else {
+        result += mountain(l);
       }
     }
     return result;
   }
-
   return build(arguments);
 }
-console.log(landscape5(1, 2, 3, 4, 5, 6, 7, 8, 9));
+console.log(landscape5(1,3,4,5,6,7,8,9));

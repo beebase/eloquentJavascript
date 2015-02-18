@@ -42,21 +42,21 @@ for (i = 0; i < size; i++) {
   result += "\n";
 }
 //console.log(result);
-
+//todo customize checkBoard
 console.log("---------------\n\n");
 
-function checkBoard(size) {
+function chessboard(size) {
   var result = "";
   for (var i = 0; i < size; i++) {
     for (var j = 0; j < size; j++) {
-      if (i % 2 === 0) {
-        result += j % 2 === 0 ? "@" : " ";
-      } else {
-        result += j % 2 === 0 ? " " : "@";
-      }
+         if(i % 2 === 0) {
+           result += j % 2 === 0 ? "$" : " ";
+         }                         else{
+           result += j % 2 === 0 ? " " : "$";
+         }
     }
     result += "\n";
   }
   return result;
 }
-console.log(checkBoard(10));
+console.log(chessboard(10));

@@ -69,7 +69,20 @@ function filter(Persons, bornBetween1920And1925F) {
  * @returns {boolean}
  */
 function bornBetween1920And1925(person) {
-  return person.born > 1900 && person.born < 1925;
+  return  person.born > 1900 && person.born < 1925;
+
 }
 var filtered = filter(ancestry, bornBetween1920And1925);
-console.log(filtered);
+//console.log(filtered);
+
+function filter_(Persons, bornBetween1920And1925F) {
+  var result = [];
+  for (var i = 0; i < Persons.length; i++) {
+    var person = Persons[i];
+    if (bornBetween1920And1925F(person)) {
+      result.push(person);
+    }
+  }
+  return result;
+}
+console.log(filter_(ancestry, bornBetween1920And1925));

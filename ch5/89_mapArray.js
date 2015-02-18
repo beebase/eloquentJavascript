@@ -45,46 +45,49 @@ var ANCESTRY_FILE = "[\n  " + [
   ].join(",\n  ") + "\n]";
 var ancestry = JSON.parse(ANCESTRY_FILE);
 
-/**
- *  adds up all the numbers in an array
- * @param {Array} array
- * @param {Function} combineF
- * @param {Number} start
- * @example
- * var result = reduce([1,2,3], combine, 0]);
- * console.log(result); //6;
- * @returns {Number}
- */
-function reduce(array, combineF, start) {
-  /** @type {Number} */
-  var current = start;
+function reduce(array, funct, start) {
+  var result = start;
   for (var i = 0; i < array.length; i++) {
-    current = combineF(current, array[i]);
+    result = funct(result, array[i]);
   }
-  return current;
+  return result;
 }
 function combine(a, b) {
   return a + b;
 }
-
-var sum = reduce(
-  [1, 2, 3, 4],
-  combine,
-  0
-);
-console.log(sum);
+function highest(a, b) {
+  return a > b ? a : b;
+}
+var a = [1, 2, 20, 4, 5];
+console.log(reduce(a, combine, 1000));
+console.log(reduce(a, highest, 0));
 
 var arr = [5, 10, 15, 20];
-var x = arr.reduce(function (prev, curr, index, array) {
+var x = arr.reduce(function (prev, curr) {
   return prev + curr;
-}, 1000);
+}, 100);
 console.log(x);
 
-var oldestPerson = ancestry.reduce(function(prevPerson, currPerson) {
-  if(currPerson.born < prevPerson.born) {
-    return currPerson;
-  }                  else {
-    return prevPerson;
+var oldestPerson = ancestry.reduce(function (prev, curr) {
+  if (prev.died - prev.born > curr.died - curr.born) {
+    return prev;
+  } else {
+    return curr;
   }
-})                         ;
-console.log(oldestPerson) ;
+});
+console.log(oldestPerson);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

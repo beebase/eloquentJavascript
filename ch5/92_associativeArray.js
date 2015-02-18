@@ -42,33 +42,60 @@ var ANCESTRY_FILE = "[\n  " + [
   ].join(",\n  ") + "\n]";
 var ancestry = JSON.parse(ANCESTRY_FILE);
 
-function average(array) {
-  function plus (prev, curr) {
-    return prev + curr;
-  }
-  var total = array.reduce(plus);
-  return total / array.length;
-}
-
-console.log(average([1, 2, 3, 4, 5]));
+// go from normal array to associative array
+var byName = {};
+ancestry.forEach(function (person) {
+  byName[person.name] = person;
+});
+//console.log(byName);
+// indexed array []
+/*
+ [
+ '{"name": "Carolus Haverbeke", "sex": "m", "born": 1832, "died": 1905, "father": "Carel Haverbeke", "mother": "Maria van Brussel"}',
+ '{"name": "Emma de Milliano", "sex": "f", "born": 1876, "died": 1956, "father": "Petrus de Milliano", "mother": "Sophia van Damme"}',
+ '...',
+ '...'
+ ]
+ */
+//associative array {}
+/*
+ {
+ 'Carolus Haverbeke': {name: 'Carolus Haverbeke',...},
+ 'Emma de Milliano': {name: 'Emma de Milliano', ...},
+ ...
+ }
+ */
 
 /**
  *
- * @param {{sex:string}}  p
- * @param {{died:number}}  p
- * @returns {boolean}
+ * @param {{mother:string, father:string}} person
+ * @param f
+ * @param defaultValue
+ * @returns {*}
  */
-function male(p) {
-  return p.sex === "m";
-}
-function female(p) {
-  return p.sex === "f";
-}
-function age(p) {
-  return p.died - p.born;
+function reduceAncestors(person, f, defaultValue) {
+  function valueFor(person) {
+    if (person === null || person === undefined) {
+      return defaultValue;
+    } else {
+      return f(person,
+        valueFor(byName[person.mother]),
+        valueFor(byName[person.father]));
+    }
+  }
+
+  return valueFor(person);
 }
 
-var avgMaleAge = average(ancestry.filter(male).map(age));
-var avgFemaleAge = average(ancestry.filter(female).map(age));
-console.log(avgMaleAge);
-console.log(avgFemaleAge);
+function sharedDNA(person, fromMother, fromFather) {
+  if (person.name === "Pauwels van Haverbeke") {
+    return 1;
+  } else {
+    return (fromMother + fromFather) / 2;
+  }
+}
+
+var ph = byName["Philibert Haverbeke"];
+var x = reduceAncestors(ph, sharedDNA, 0);
+console.log(x / 4);
+
