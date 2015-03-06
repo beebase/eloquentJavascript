@@ -2,22 +2,23 @@
 // add method to an object
 var rabbit = {};
 rabbit.speak = function (line) {
-  console.log("Rabbit says " + line);
+  console.log("The rabbit says '" + line + "'");
 };
-rabbit.speak("HeLLO");
+rabbit.speak("I'm alive.");
 
-function speak(line, line2) {
-  console.log("The " + this.type + " Rabbit says " + line + "!. " + line2);
+// 'this' word refers to the object that calls the function;
+function speak(line) {
+  console.log("The " + this.type + " rabbit says '" + line + "'");
 }
-
 var whiteRabbit = {type: "white", speak: speak};
 var fatRabbit = {type: "fat", speak: speak};
 
-whiteRabbit.speak("HIII");
-fatRabbit.speak("HOOO");
+whiteRabbit.speak("Whatever");
+fatRabbit.speak("Yeah");
 
-speak.apply(whiteRabbit, ["ggg", "How are you"]);
-speak.call(fatRabbit, "Oh My", "Yeah");
+//send object to a function with apply(Obj,[]) or call(Obj, "..")
+speak.apply(fatRabbit, ["Burp!"]);
+speak.call({type: "old"}, "Oh my.");
 
 // Object.prototype is the root of the prototype chain
 console.log("{} has a prototype? ", Object.getPrototypeOf({}) === Object.prototype);
@@ -38,6 +39,6 @@ var protoRabbit = {
     console.log("The " + this.type + " rabbit says '" + line + "'");
   }
 };
-var killerRabbit = Object(protoRabbit);
+var killerRabbit = Object.create(protoRabbit);
 killerRabbit.type = "killer";
 killerRabbit.speak("SKREEE");

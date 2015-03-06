@@ -3,23 +3,28 @@ var a = [1, 2, 3, 4, 5];
 var b = ["this", "is", "a", "great", "test"];
 
 function logEach(array) {
+  var result = "";
   for (var i = 0; i < array.length; i++) {
-    //console.log(array[i]);
+    result += (array[i]);
   }
+  return result;
 }
-//logEach(a);
-//logEach(b);
+
+//console.log("logEach(a): " + logEach(a));
+//console.log("logEach(b): " +logEach(b));
 
 function logger(n) {
-  console.log(n);
+  return n;
 }
 function forEach(array, funct) {
+  var result = "";
   for (var i = 0; i < array.length; i++) {
-    funct(array[i]);
+    result += funct(array[i]);
   }
+  return result;
 }
-//forEach(a, logger);
-//forEach(b, logger);
+//console.log("forEach(a, logger): "+ forEach(a, logger));
+//console.log("forEach(b, logger): " + forEach(b, logger));
 
 function greaterThan(nr) {
   return function (target) {
@@ -30,20 +35,27 @@ var greaterThan10 = greaterThan(10);
 //console.log(greaterThan10(11));
 //console.log(greaterThan10(9));
 
-function repeat(times, bodyFunction) {
-  for (var i = 0; i < times; i++) {
-    bodyFunction(i);
-  }
+function logIt(i) {
+  return (i + " is even.");
 }
-function bodyFunction(i) {
-  if (isEvenFunction(i)) {
-    thenFunction(i);
-  }
-}
-function isEvenFunction(i) {
+
+function isEven(i) {
   return i % 2 === 0;
 }
-function thenFunction(i) {
-  console.log(i, "is even");
+
+function body(i) {
+  var result = "";
+  if (isEven(i)) {
+    result = logIt(i) + "\n";
+  }
+  return result;
 }
-//repeat(10, bodyFunction)   ;
+function repeat(array) {
+  var result = "";
+  for (var i = 0; i < array.length; i++) {
+    result += body(array[i]);
+  }
+  return result;
+}
+//console.log("repeat(a): " , repeat(a));
+

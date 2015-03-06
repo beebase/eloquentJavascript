@@ -11,8 +11,8 @@ function minimum(a, b) {
     return null;
   }
 }
-console.log(minimum(4, 6));
-console.log("___________________\n");
+//console.log(minimum(4, 6));
+//console.log("___________________\n");
 
 function isEven(n) {
   if (n === 0) {
@@ -22,8 +22,8 @@ function isEven(n) {
   }
   return ((n - 2) % 2) === 0;
 }
-console.log(isEven(11));
-console.log("___________________\n");
+//console.log(isEven(11));
+//console.log("___________________\n");
 
 function countChar(string, char) {
   var count = 0;
@@ -34,6 +34,6 @@ function countChar(string, char) {
   }
   return count;
 }
-console.log(countChar("this is the best bean ever", "e"));
+//console.log(countChar("this is the best bean ever", "e"));
 
-console.log("\n################");
+//console.log("\n################");

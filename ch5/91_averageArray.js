@@ -41,34 +41,44 @@ var ANCESTRY_FILE = "[\n  " + [
     '{"name": "Jacobus Bernardus van Brussel", "sex": "m", "born": 1736, "died": 1809, "father": "Jan van Brussel", "mother": "Elisabeth Haverbeke"}'
   ].join(",\n  ") + "\n]";
 var ancestry = JSON.parse(ANCESTRY_FILE);
-
+var array = [1, 2, 3, 4, 5];
 function average(array) {
-  function plus (prev, curr) {
+  var sum = array.reduce(function(prev, curr) {
     return prev + curr;
-  }
-  var total = array.reduce(plus);
-  return total / array.length;
+  });
+  return sum / array.length;
 }
+console.log(average(array));
 
-console.log(average([1, 2, 3, 4, 5]));
-
-/**
- *
- * @param {{sex:string}}  p
- * @param {{died:number}}  p
- * @returns {boolean}
- */
-function male(p) {
-  return p.sex === "m";
-}
-function female(p) {
-  return p.sex === "f";
-}
 function age(p) {
   return p.died - p.born;
 }
+function male(p) {
+  return p.sex === 'm';
+}
+function female(p) {
+  return p.sex === 'f';
+}
+
+function filterMale(persons, maleFn) {
+  var result = [];
+  persons.forEach(function(p){
+    if(maleFn(p)){
+      result.push(p);
+    }
+  })          ;
+  return result;
+}
+
+console.log(filterMale(ancestry, male));
 
 var avgMaleAge = average(ancestry.filter(male).map(age));
 var avgFemaleAge = average(ancestry.filter(female).map(age));
-console.log(avgMaleAge);
-console.log(avgFemaleAge);
+console.log(avgMaleAge, avgFemaleAge);
+
+var filterOnMale = ancestry.filter(male);
+var filterOnFemale = ancestry.filter(female);
+
+var getMaleAges = filterOnMale.map(age);
+var getFemaleAges = filterOnFemale.map(age);
+console.log(average(getMaleAges), average(getFemaleAges));

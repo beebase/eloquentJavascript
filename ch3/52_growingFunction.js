@@ -7,23 +7,23 @@ function printFarmInventory1(cows, chickens) {
   while (cowString.length < 3) {
     cowString = "0" + cowString;
   }
-  console.log(cowString + " Cows");
+//  console.log(cowString + " Cows");
 
   var chickenString = String(chickens);
   while (chickenString.length < 3) {
     chickenString = "0" + chickenString;
   }
-  console.log(chickenString + " Chickens");
+  //console.log(chickenString + " Chickens");
 }
 printFarmInventory1(7, 11);
-console.log("_____________________________\n");
+//console.log("_____________________________\n");
 //1st refactoring
 function printZeroPaddedWithLabel2(number, label) {
   var numberString = String(number);
   while (numberString.length < 3) {
     numberString = "0" + numberString;
   }
-  console.log(numberString + " " + label);
+  //console.log(numberString + " " + label);
 }
 function printFarmInventory2(cows, chickens, pigs) {
   printZeroPaddedWithLabel2(cows, "Cows");
@@ -31,7 +31,7 @@ function printFarmInventory2(cows, chickens, pigs) {
   printZeroPaddedWithLabel2(pigs, "Pigs");
 }
 printFarmInventory2(7, 11, 3);
-console.log("_____________________________\n");
+//console.log("_____________________________\n");
 //2nd refactoring
 function zeroPad(number, width) {
   var numberString = String(number);
@@ -41,13 +41,13 @@ function zeroPad(number, width) {
   return numberString;
 }
 function printFarmInventory3(cows, chickens, pigs) {
-  console.log(zeroPad(cows, 4) + " Cows");
-  console.log(zeroPad(chickens, 4) + " Chickens");
-  console.log(zeroPad(pigs, 4) + " Pigs");
+  //console.log(zeroPad(cows, 4) + " Cows");
+  //console.log(zeroPad(chickens, 4) + " Chickens");
+  //console.log(zeroPad(pigs, 4) + " Pigs");
 }
 printFarmInventory3(7, 16, 3);
 
-console.log("\n#############################\n");
+//console.log("\n#############################\n");
 /**
  *
  * @param {Number} cows
@@ -67,7 +67,7 @@ function printFarmDirectory4(cows, chickens) {
   result = cowString + " Cows\n" + chickenString + " ChickenString";
   return result;
 }
-console.log(printFarmDirectory4(10, 20));
+//console.log(printFarmDirectory4(10, 20));
 
 function printZeroPaddedWithLabel5(number, label) {
   var result;
@@ -84,7 +84,7 @@ function printFarmDirectory5(cows, chickens) {
   result += printZeroPaddedWithLabel5(chickens, "Chickens");
   return result;
 }
-console.log(printFarmDirectory5(30, 40));
+//console.log(printFarmDirectory5(30, 40));
 
 function printZeroPadded6(number, size) {
   var result = String(number);
@@ -93,10 +93,10 @@ function printZeroPadded6(number, size) {
   }
   return result;
 }
-function printFarmInventory(cows, chickens) {
+function printFarmInventory6(cows, chickens) {
   var result = "";
   result += printZeroPadded6(cows, 8) + " Cows\n";
   result += printZeroPadded6(chickens, 8) + " Chickens\n";
   return result;
 }
-console.log(printFarmInventory(50,60));
+//console.log(printFarmInventory6(50,60));

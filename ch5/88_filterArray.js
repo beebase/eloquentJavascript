@@ -47,42 +47,33 @@ var ANCESTRY_FILE = "[\n  " + [
 var ancestry = JSON.parse(ANCESTRY_FILE);
 console.log("ancestry.length:", ancestry.length);
 
-/**
- * Convert array to filtered array
- * @param {Array} Persons
- * @param {function} bornBetween1920And1925F
- * @returns {Array}
- */
-function filter(Persons, bornBetween1920And1925F) {
+function isBornBetween(person) {
+  return person.born > 1900 && person.born < 1925;
+}
+function filterPersons(persons) {
   var result = [];
-  for (var i = 0; i < Persons.length; i++) {
-    var person = Persons[i];
-    if (bornBetween1920And1925F(person)) {
-      result.push(person);
+  for (var i = 0; i < persons.length; i++) {
+    if (isBornBetween(persons[i])) {
+      result.push(persons[i]);
     }
   }
   return result;
 }
-/**
- * filter: born between 1900 and 1925
- * @param {object} person
- * @returns {boolean}
- */
-function bornBetween1920And1925(person) {
-  return  person.born > 1900 && person.born < 1925;
 
-}
-var filtered = filter(ancestry, bornBetween1920And1925);
-//console.log(filtered);
+var persons = [
+  {"name": "Carolus Haverbeke", "sex": "m", born: 1832, "died": 1905, "father": "Carel Haverbeke", "mother": "Maria van Brussel"},
+  {"name": "Emma de Milliano", "sex": "f", born: 1920, "died": 2015, "father": "Petrus de Milliano", "mother": "Sophia van Damme"}
+];
 
-function filter_(Persons, bornBetween1920And1925F) {
-  var result = [];
-  for (var i = 0; i < Persons.length; i++) {
-    var person = Persons[i];
-    if (bornBetween1920And1925F(person)) {
-      result.push(person);
-    }
-  }
-  return result;
-}
-console.log(filter_(ancestry, bornBetween1920And1925));
+  console.log(filterPersons(persons).length);
+
+console.log(filterPersons(ancestry).map(function(p) {
+  return p.name + " " + p.born;
+}));
+
+var filtered2 = ancestry.filter(function (p) {
+  return isBornBetween(p);
+})                        ;
+console.log(filtered2.map(function(p) {
+  return p.name;
+}));

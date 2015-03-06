@@ -1,62 +1,50 @@
-
 'use strict';
 var a = [1, 2, 3, 4, 5];
-var b = ["this", "is", "a", "test"];
+var b = ["this", "is", "a", "great", "test"];
 
 function logEach(array) {
   for (var i = 0; i < array.length; i++) {
     console.log(array[i]);
   }
 }
-//logEach(a);
-//logEach(b);
-//console.log("_______________________\n");
+logEach(a);
+logEach(b);
 
 function logger(n) {
   console.log(n);
 }
-function forEach(array, func) {
+function forEach(array, funct) {
   for (var i = 0; i < array.length; i++) {
-    func(array[i]);
+    funct(array[i]);
   }
 }
 forEach(a, logger);
 forEach(b, logger);
-forEach(a, function (nr) {
-  console.log("x:" + nr);
-});
-console.log("_______________________\n");
 
 function greaterThan(nr) {
-  return function (x) {
-    return x > nr;
+  return function (target) {
+    return target > nr;
   };
 }
-var checkIfGreaterThan10 = greaterThan(10);
-console.log("checkIfGreaterThan10:" + checkIfGreaterThan10(11));
-console.log("_______________________\n");
+var greaterThan10 = greaterThan(10);
+console.log(greaterThan10(11));
+console.log(greaterThan10(9));
 
-function unless(test, thenFunction) {
-  if (!test) {
-    thenFunction();
-  }
-}
-function isTrueFunction(test, thenFunction) {
-  if (test) {
-    thenFunction();
-  }
-}
 function repeat(times, bodyFunction) {
   for (var i = 0; i < times; i++) {
     bodyFunction(i);
   }
 }
-repeat(10, function  (n) {
-  // (test, then) unless n is odd, print 'n is even'
-  console.log(n, n % 2);
-  unless(n % 2, function () {
-    console.log(n, "is even");
-  });
-});
-console.log("_______________________\n");
+function isEvenFunction(i) {
+  return i % 2 === 0;
+}
+function thenFunction(i) {
+  console.log(i, "is even");
+}
+function bodyFunction(i) {
+  if (isEvenFunction(i)) {
+    thenFunction(i);
+  }
+}
 
+repeat(10, bodyFunction)   ;

@@ -2,7 +2,7 @@
  * Created by maarten on 29/01/15.
  */
 'use strict';
-var string = ""
+var string = ''
   , size   = 10
   , i
   , j;
@@ -10,53 +10,58 @@ for (i = 0; i < size; i++) {
   for (j = 0; j < size; j++) {
     if (i % 2 === 0) {
       if (j % 2 === 0) {
-        string += "#";
+        string += '#';
       } else {
-        string += " ";
+        string += ' ';
       }
     } else {
       if (j % 2 === 0) {
-        string += " ";
+        string += ' ';
       } else {
-        string += "#";
+        string += '#';
       }
     }
   }
   //console.log(string);
-  string = "";
+  string = '';
 }
 
-console.log("---------------/n/n");
+console.log('---------------/n/n');
 
-var result = ""
+var result = ''
   , char1
   , char2; // characters to be printed
 for (i = 0; i < size; i++) {
   for (j = 0; j < size; j++) {
     if (i % 2 === 0) {
-      result += (j % 2 !== 1) ? "#" : " ";
+      result += (j % 2 !== 1) ? '#' : ' ';
     } else {
-      result += (j % 2 !== 1) ? " " : "#";
+      result += (j % 2 !== 1) ? ' ' : '#';
     }
   }
-  result += "\n";
+  result += '\n';
 }
 //console.log(result);
-//todo customize checkBoard
-console.log("---------------\n\n");
 
-function chessboard(size) {
-  var result = "";
-  for (var i = 0; i < size; i++) {
-    for (var j = 0; j < size; j++) {
-         if(i % 2 === 0) {
-           result += j % 2 === 0 ? "$" : " ";
-         }                         else{
-           result += j % 2 === 0 ? " " : "$";
-         }
-    }
-    result += "\n";
+function setChar(i,j) {
+  var result = '';
+  if (i % 2 === 0) {
+    result += j % 2 === 0 ? '^' : ' ';
+  } else {
+    result += j % 2 === 0 ? ' ' : '^';
   }
   return result;
 }
-console.log(chessboard(10));
+
+function createBoard(size) {
+  var result = '';
+  for (var i = 0; i < size; i++) {
+    for (var j = 0; j < size; j++) {
+      result += setChar(i,j);
+    }
+    result += '\n';
+  }
+  return result;
+}
+
+//console.log(createBoard(10));

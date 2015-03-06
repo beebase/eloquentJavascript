@@ -17,3 +17,14 @@ console.log(x);
 
 var y = reverseArray(x);
 console.log(y);
+
+function reverseArray_(a) {
+  var result = [];
+  var count = 0;
+  for (var i = 0; i < a.length && count >= 0; i++) {
+    result[count] = a[i];
+    count--;
+  }
+  return result;
+}
+console.log(reverseArray(["test", "a", "is", "this"]));

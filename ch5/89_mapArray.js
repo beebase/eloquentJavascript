@@ -1,6 +1,3 @@
-/**
- * Created by maarten on 10/02/15.
- */
 'use strict';
 var ANCESTRY_FILE = "[\n  " + [
     '{"name": "Carolus Haverbeke", "sex": "m", "born": 1832, "died": 1905, "father": "Carel Haverbeke", "mother": "Maria van Brussel"}',
@@ -45,49 +42,24 @@ var ANCESTRY_FILE = "[\n  " + [
   ].join(",\n  ") + "\n]";
 var ancestry = JSON.parse(ANCESTRY_FILE);
 
-function reduce(array, funct, start) {
-  var result = start;
-  for (var i = 0; i < array.length; i++) {
-    result = funct(result, array[i]);
+function getName(p) {
+  return p.name;
+}
+function isOverNinety(p) {
+  return p.died - p.born > 90;
+}
+
+var overNinety = ancestry.filter(function (p) {
+  return isOverNinety(p);
+});
+
+function newFormat(persons) {
+  var result = [];
+  for (var i = 0; i < persons.length; i++) {
+    var p = persons[i];
+    result.push(getName(p));
+
   }
   return result;
 }
-function combine(a, b) {
-  return a + b;
-}
-function highest(a, b) {
-  return a > b ? a : b;
-}
-var a = [1, 2, 20, 4, 5];
-console.log(reduce(a, combine, 1000));
-console.log(reduce(a, highest, 0));
-
-var arr = [5, 10, 15, 20];
-var x = arr.reduce(function (prev, curr) {
-  return prev + curr;
-}, 100);
-console.log(x);
-
-var oldestPerson = ancestry.reduce(function (prev, curr) {
-  if (prev.died - prev.born > curr.died - curr.born) {
-    return prev;
-  } else {
-    return curr;
-  }
-});
-console.log(oldestPerson);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+console.log(newFormat(overNinety));

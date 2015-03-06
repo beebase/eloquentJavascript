@@ -19,15 +19,14 @@ var times2 = multiplier(2);
 var x = times5(10);
 var y = times2(5);
 
-console.log(x, y);    // 50 10
+//console.log(x, y);    // 50 10
 
-console.log("\n___________________________\n\n");
+//console.log("\n___________________________\n\n");
 
-function multiplier_ (nr) {
-  return function(test) {
+function multiplier_(nr) {
+  return function( test) {
     return nr * test;
   }                  ;
 }
-var times7 = multiplier_(7);
-
-console.log(times7(11));
+var times10 = multiplier(10);
+//console.log(times10(5));

@@ -1,8 +1,4 @@
-/**
- * Created by maarten on 10/02/15.
- */
 'use strict';
-
 var ANCESTRY_FILE = "[\n  " + [
     '{"name": "Carolus Haverbeke", "sex": "m", "born": 1832, "died": 1905, "father": "Carel Haverbeke", "mother": "Maria van Brussel"}',
     '{"name": "Emma de Milliano", "sex": "f", "born": 1876, "died": 1956, "father": "Petrus de Milliano", "mother": "Sophia van Damme"}',
@@ -45,52 +41,37 @@ var ANCESTRY_FILE = "[\n  " + [
     '{"name": "Jacobus Bernardus van Brussel", "sex": "m", "born": 1736, "died": 1809, "father": "Jan van Brussel", "mother": "Elisabeth Haverbeke"}'
   ].join(",\n  ") + "\n]";
 var ancestry = JSON.parse(ANCESTRY_FILE);
-/**
- *
- * @param {Array} number array
- * @param {Function} combineF //adds up to numbers
- * @param {Number} start   // starting result
- * @returns {Number} result
- */
-function reduce(array, combineF, start) {
-  var result = start;
-  for (var i = 0; i < array.length; i++) {
-    result = combineF(result, array[i]);
-  }
-}
-function combine(a, b) {
+var array = [1, 2, 30, 4, 5];
+
+function summarize(a, b) {
   return a + b;
 }
-var sum = reduce([1, 2, 3, 4, 5], combine, 1000);
-
-console.log("sum reduce:", sum);
-console.log("___________________\n");
-
-var arr = [5, 20, 15, 10];
-// get sum
-var x = arr.reduce(function (prev, current, index, arr) {
-  console.log(prev, current, index, arr);
-  return prev + current;
-}, 1000);
-// get max
-var y = arr.reduce(function (prev, curr, index, arr) {
-  if (curr > prev) {
-    return curr;
+function highest(a, b) {
+  return a > b ? a : b;
+}
+function reduce(array, fn, start) {
+  var result = start || 0;
+  for (var i = 0; i < array.length; i++) {
+    result = fn(result, array[i]);
   }
-});
-console.log("sum arr.reduce:", x);
-console.log("max arr.reduce:", y);
-console.log("___________________\n");
+  return result;
+}
+var summarized = reduce(array, summarize, 1000);
+console.log("summarized: " + summarized);
+var highestt = reduce(array, highest);
+console.log(highestt);
 
-// min gets filled with the last return value (cur of min) after each iteration.
-var oldestPerson = ancestry.reduce(function (prev, curr) {
-  var currentPersonAge = curr.died - curr.born;
-  console.log(curr.name + " " + currentPersonAge)
-  var prevPersonAge = prev.died - prev.born;
-  if (currentPersonAge > prevPersonAge) {
-    return curr;
-  } else {
-    return prev;
-  }
-});
-console.log("oldestPerson:", oldestPerson);
+function getOldestPerson(ancestry) {
+
+  return ancestry.reduce(function (prevPerson, currPerson) {
+    if (currPerson.born < prevPerson.born) {
+      return currPerson;
+    }
+    else {
+      return prevPerson;
+    }
+  });
+}
+
+var oldestPerson = getOldestPerson(ancestry);
+console.log("oldestPerson: ", oldestPerson.name, oldestPerson.born);

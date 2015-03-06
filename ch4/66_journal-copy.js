@@ -1,16 +1,5 @@
+/*
 'use strict';
-
-//HELPER calculates the probability for given table
-// (= array with count of possibilities) [79, 9, 4, 1]
-// 00 = no squirrel , no pizza  (79 counts)
-// 01 = no squirrel , yes pizza (9 counts)
-// 10 = yes squirrel, no pizza (4 counts)
-// 11 = yes squirel, yes pizza (1 count)
-function phi(t) {
-  return (t[3] * t[0] - t[2] * t[1]) /
-    Math.sqrt((t[2] + t[3]) * (t[0] + t[1]) * (t[1] + t[3]) * (t[0] + t[2]));
-}
-
 var JOURNAL = [
   {"events": ["carrot", "exercise", "weekend"], "squirrel": false},
   {"events": ["bread", "pudding", "brushed teeth", "weekend", "touched tree"], "squirrel": false},
@@ -103,77 +92,82 @@ var JOURNAL = [
   {"events": ["bread", "brushed teeth", "television", "weekend"], "squirrel": false},
   {"events": ["cauliflower", "peanuts", "brushed teeth", "weekend"], "squirrel": false}
 ];
+function phi(t) {
+  return (t[3] * t[0] - t[2] * t[1]) /
+    Math.sqrt((t[2] + t[3]) * (t[0] + t[1]) * (t[1] + t[3]) * (t[0] + t[2]));
+}
 
-//EXAMPLE mapping eventName to probability (phi);
+//EXAMPLE mapping event name to probability
 var map = {};
 function storePhi(event, phi) {
   map[event] = phi;
 }
-storePhi("pizza", 0.069);
-storePhi("touched tree", -0.081);
-console.log("map: ", map);
-console.log("'pizza' in map: ", "pizza" in map);
-console.log("map['pizza']: ", map.pizza);
+storePhi("pizza", 9);
+storePhi("def", 4);
+//console.log("map:", map);
+//console.log("'pizza' in map:", 'pizza' in map);
+//console.log("map.pizza", map.pizza);
+for (var prop in map) {
+  if (map.hasOwnProperty(prop)) {
+    //console.log(prop, map[prop]);
+  }
+}
 
-function hasEvent(event, entry) {
-  return entry.events.indexOf(event) !== -1;
+
+//console.log("__________\n")  ;
+function hasEvent(event, row) {
+  return row.events.indexOf(event) > -1;
 }
 function tableFor(event, journal) {
-  var result = [0, 0, 0, 0];
+  var table = [0,0,0,0]
   for (var i = 0; i < journal.length; i++) {
     var index = 0;
-    var entry = journal[i];
-    if (hasEvent(event, entry)) {
+    var row = journal[i];
+    if(hasEvent(event,row)){
       index += 1;
     }
-    if (entry.squirrel) {
+    if(row.squirrel) {
       index += 2;
     }
-    result[index] += 1;
+    table[index] ++;
   }
-  return result;
+  return table;
 }
-
-function getCorrelations(journal) {
+function getCorrelations (journal) {
   var result = {};
   for (var i = 0; i < journal.length; i++) {
     var events = journal[i].events;
     for (var j = 0; j < events.length; j++) {
       var event = events[j];
-      if (!(event in result)) {
-        result[event] = phi(tableFor(event, journal));
-      }
+      result[event] = phi(tableFor(event, journal));
     }
   }
   return result;
 }
 
 var correlations = getCorrelations(JOURNAL);
-
-function filterResults(correlations) {
-  var result = {};
-  for (var event in correlations) {
-    if (correlations.hasOwnProperty(event)) {
-      var value = correlations[event];
-      if (value > 0.1 || value < -0.1) {
-        result[event] = value;
+//console.log(correlations);
+function correlationEvent(correlations, oper) {
+  var highestCor = 0;
+  var result;
+  for (var cor in correlations) {
+    if (correlations.hasOwnProperty(cor)) {
+      var value = correlations[cor];
+      if (oper === ">") {
+        if (value > highestCor) {
+          highestCor = value;
+          result = cor + ":" + value;
+        }
+      } else if (oper === "<") {
+        if (value < highestCor) {
+          highestCor = value;
+          result = cor + ":" + value;
+        }
       }
+
     }
   }
   return result;
 }
-var filteredCorrelations = filterResults(correlations);
-console.log("filteredCorrelations:", filteredCorrelations);
-
-//mark suspected
-function setSuspectedCombination(highestCorrelationEvent, lowestCorrelationEvent, journal) {
-  for (var i = 0; i < journal.length; i++) {
-    var entry = journal[i];
-    if (hasEvent(highestCorrelationEvent, entry) && !hasEvent(lowestCorrelationEvent, entry)) {
-      entry.events.push(highestCorrelationEvent + " " + lowestCorrelationEvent);
-    }
-  }
-}
-setSuspectedCombination("peanuts", "brushed teeth", JOURNAL);
-var outcome = phi(tableFor("peanuts brushed teeth", JOURNAL));
-console.log("setSuspectedCombination:", outcome);
+//console.log("highest", correlationEvent(correlations, ">"));
+//console.log("lowest", correlationEvent(correlations, "<"));*/

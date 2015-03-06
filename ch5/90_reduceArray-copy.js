@@ -1,8 +1,4 @@
-/**
- * Created by maarten on 10/02/15.
- */
 'use strict';
-
 var ANCESTRY_FILE = "[\n  " + [
     '{"name": "Carolus Haverbeke", "sex": "m", "born": 1832, "died": 1905, "father": "Carel Haverbeke", "mother": "Maria van Brussel"}',
     '{"name": "Emma de Milliano", "sex": "f", "born": 1876, "died": 1956, "father": "Petrus de Milliano", "mother": "Sophia van Damme"}',
@@ -45,44 +41,30 @@ var ANCESTRY_FILE = "[\n  " + [
     '{"name": "Jacobus Bernardus van Brussel", "sex": "m", "born": 1736, "died": 1809, "father": "Jan van Brussel", "mother": "Elisabeth Haverbeke"}'
   ].join(",\n  ") + "\n]";
 var ancestry = JSON.parse(ANCESTRY_FILE);
-
-function reduceF(array, combineF, start) {
-  var current = start;
-  for (var i = 0; i < array.length; i++) {
-    current = combineF(current, array[i]);
-  }
-  return current;
-}
-
-var sum = reduceF(
-  [1, 2, 3, 4],     // array
-  combineF,
-  0                 // start
-);
-
-function combineF (a, b) {
+var array = [1, 2, 30, 4, 5];
+function summarize(a, b) {
   return a + b;
 }
+function highest(a, b) {
+  return a > b ? a : b;
+}
+function reduce(array, fn, start) {
+  var result = start || 0;
+  for (var i = 0; i < array.length; i++) {
+    result = fn(result, array[i]);
+  }
+  return result;
+}
+var summarized = reduce(array, summarize, 1000);
+console.log("summarized: ", summarized);
+var highestNr = reduce(array, highest);
+console.log("highestNr: " + highestNr);
 
-console.log("sum reduceF:", sum);
-console.log("___________________\n");
-
-
-var arr = [5, 10, 15, 20];
-var x = arr.reduce(function (prev, current, index, arr) {
-  console.log(prev, current, index, arr);
-  return prev + current;
-}, 1000);
-console.log("sum arr.reduce:",x);
-console.log("___________________\n");
-
-// min gets filled with the last return value (cur of min) after each iteration.
-var oldestPerson = ancestry.reduce(function (min, cur) {
-  //console.log(min.born);
-  if (cur.born < min.born) {
-    return cur;
+var oldestPerson = ancestry.reduce(function (prevPerson, currPerson) {
+  if (currPerson.born < prevPerson.born) {
+    return currPerson;
   } else {
-    return min;
+    return prevPerson;
   }
 });
-console.log("oldestPerson:", oldestPerson);
+console.log("oldestPerson: ", oldestPerson.name, oldestPerson.born);

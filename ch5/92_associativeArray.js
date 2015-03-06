@@ -42,49 +42,28 @@ var ANCESTRY_FILE = "[\n  " + [
   ].join(",\n  ") + "\n]";
 var ancestry = JSON.parse(ANCESTRY_FILE);
 
-// go from normal array to associative array
-var byName = {};
-ancestry.forEach(function (person) {
-  byName[person.name] = person;
-});
-//console.log(byName);
-// indexed array []
-/*
- [
- '{"name": "Carolus Haverbeke", "sex": "m", "born": 1832, "died": 1905, "father": "Carel Haverbeke", "mother": "Maria van Brussel"}',
- '{"name": "Emma de Milliano", "sex": "f", "born": 1876, "died": 1956, "father": "Petrus de Milliano", "mother": "Sophia van Damme"}',
- '...',
- '...'
- ]
- */
-//associative array {}
-/*
- {
- 'Carolus Haverbeke': {name: 'Carolus Haverbeke',...},
- 'Emma de Milliano': {name: 'Emma de Milliano', ...},
- ...
- }
- */
+function convertByName(persons) {
+  var result = [];
+  persons.forEach(function (person) {
+    result[person.name] = person;
+  });
+  return result;
+}
+var byName = convertByName(ancestry);
 
-/**
- *
- * @param {{mother:string, father:string}} person
- * @param f
- * @param defaultValue
- * @returns {*}
- */
-function reduceAncestors(person, f, defaultValue) {
+function reduceAncestors(pers, f, defaultValue) {
   function valueFor(person) {
     if (person === null || person === undefined) {
       return defaultValue;
     } else {
       return f(person,
         valueFor(byName[person.mother]),
-        valueFor(byName[person.father]));
+        valueFor(byName[person.father])
+      );
     }
   }
 
-  return valueFor(person);
+  return valueFor(pers);
 }
 
 function sharedDNA(person, fromMother, fromFather) {
@@ -98,4 +77,3 @@ function sharedDNA(person, fromMother, fromFather) {
 var ph = byName["Philibert Haverbeke"];
 var x = reduceAncestors(ph, sharedDNA, 0);
 console.log(x / 4);
-

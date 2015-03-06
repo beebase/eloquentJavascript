@@ -1,6 +1,3 @@
-/**
- * Created by maarten on 10/02/15.
- */
 'use strict';
 var ANCESTRY_FILE = "[\n  " + [
     '{"name": "Carolus Haverbeke", "sex": "m", "born": 1832, "died": 1905, "father": "Carel Haverbeke", "mother": "Maria van Brussel"}',
@@ -45,49 +42,31 @@ var ANCESTRY_FILE = "[\n  " + [
   ].join(",\n  ") + "\n]";
 var ancestry = JSON.parse(ANCESTRY_FILE);
 
-/**
- *  adds up all the numbers in an array
- * @param {Array} array
- * @param {Function} funct
- * @param {Number} start
- * @example
- * var result = reduce([1,2,3], combine, 0]);
- * console.log(result); //6;
- * @returns {Number}
- */
-function reduce(array, funct, start) {
-  var result = start;
-  for (var i = 0; i < array.length; i++) {
-    result = funct(result, array[i]);
+function getName(p) {
+  return p.name;
+}
+function isOverNinety(p) {
+  return p.died - p.born > 90;
+}
+var overNinety = ancestry.filter(function(p) {
+  return isOverNinety(p);
+})  ;
+
+function newFormat(persons) {
+  var result = [];
+  for (var i = 0; i < persons.length; i++) {
+    var p = persons[i];
+    if (isOverNinety(p)) {
+      result.push(getName(p));
+    }
   }
   return result;
 }
-function combine(a, b) {
-  return a + b;
-}
-function highest(a, b) {
-  return a > b ? a : b;
-}
-var a = [1, 2, 20, 4, 5];
-console.log(reduce(a, combine, 1000));
-console.log(reduce(a, highest, 0));
+var format1 = newFormat(ancestry);
+console.log("format1: ", format1);
 
 
-var arr = [5, 10, 15, 20];
-var x = arr.reduce(function (prev, curr, index, array) {
-  return prev + curr;
-}, 1000);
-console.log(x);
-
-/**
- *
- * @param {{born:number}}
- */
-var oldestPerson = ancestry.reduce(function(prevPerson, currPerson) {
-  if(currPerson.born < prevPerson.born) {
-    return currPerson;
-  }                  else {
-    return prevPerson;
-  }
-})                         ;
-console.log(oldestPerson) ;
+var format2 = overNinety.map(function (p) {
+  return getName(p);
+});
+console.log("format2: ", format2);

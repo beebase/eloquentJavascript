@@ -16,20 +16,7 @@ function power(base, exponent) {
   return result;
 }
 
-console.log(power(2));
-console.log(power(2, 5));
+//console.log(power(2));
+//console.log(power(2, 5));
 
-console.log("\n_____________________\n\n");
-
-function power_(base,exp) {
-  if(exp === undefined) {
-    exp = 2;
-  }
-  var result = 1;
-  for (var i = 0; i < exp; i++) {
-     result = base * result;
-  }
-  return result;
-}
-console.log(power_(2));
-console.log(power_(2,5));
+//console.log('\n_____________________\n\n');

@@ -47,47 +47,30 @@ var ANCESTRY_FILE = "[\n  " + [
 var ancestry = JSON.parse(ANCESTRY_FILE);
 console.log("ancestry.length:", ancestry.length);
 
-//custom filter
-function filter(array, testFunction) {
-  var passed = [];
-  for (var i = 0; i < array.length; i++) {
-    var person = array[i]
-    if (testFunction(person)) {
-      passed.push(person);
-    }
-  }
-  return passed;
+function isBornBetween(person) {
+  return person.born > 1900 && person.born < 1925;
 }
 
-console.log(filter(ancestry, function (person) {
-  return person.born > 1900 && person.born < 1925;
-}));
-
-// standard method "filter" on array
-var filtered = ancestry.filter(function (person) {
-  return person.born > 1900 && person.born < 1925;
-});
-console.log("filtered.length:", filtered.length);
-
-console.log("_____________________\n");
-
-//main
-var filtered2 = filter2(ancestry, function (person) {
-  return bornBetween1920And1925(person);
-});
-//helpers
-function filter2(array, testFunction) {
+function filterPersons(persons) {
   var result = [];
-  for (var i = 0; i < array.length; i++) {
-    var person = array[i];
-    if (testFunction(person)) {
+  for (var i = 0; i < persons.length; i++) {
+    var person = persons[i];
+    if (isBornBetween(person)) {
       result.push(person);
     }
   }
   return result;
 }
-function bornBetween1920And1925(person) {
-  return person.born > 1900 && person.born < 1925;
-}
-console.log("filtered2.length:", filtered2.length);
-console.log("__________________\n");
+var filtered1 = filterPersons(ancestry);
+var f1 = filtered1.map(function (p) {
+  return p.name;
+});
+console.log("filtered1: ", f1);
+
+var filtered2 = ancestry.filter(function (person) {
+  return isBornBetween(person);
+});
+var f2 = filtered2.map(function (p) {
+  return p.name;
+});
+console.log("filtered2: ", f2);

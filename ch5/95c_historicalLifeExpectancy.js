@@ -41,40 +41,38 @@ var ANCESTRY_FILE = "[\n  " + [
     '{"name": "Jacobus Bernardus van Brussel", "sex": "m", "born": 1736, "died": 1809, "father": "Jan van Brussel", "mother": "Elisabeth Haverbeke"}'
   ].join(",\n  ") + "\n]";
 var ancestry = JSON.parse(ANCESTRY_FILE);
-var array = [1,2,3,4,5];
+
 function average(array) {
-  return array.reduce(function (prev, curr) {
-      return prev + curr;
-    }) / array.length;
-}
-var test = average(array);
-console.log(test);
+  function plus(a, b) {
+    return a + b;
+  }
 
-/**
- *
- * @param {{died: number, born:number, sex:string}} p
- * @returns {number}
- */
-function age(p) {
-  return p.died - p.born;
-}
-function male(p) {
-  return p.sex === "m";
-}
-function female(p) {
-  return p.sex === "f";
+  return (array.reduce(plus) / array.length).toFixed(1);
 }
 
-var avgMaleAge = average(ancestry.filter(male).map(age));
-var avgFemaleAge = average(ancestry.filter(female).map(age));
-console.log("avgMaleAge: " , avgMaleAge);
-console.log("avgFemaleAge: ", avgFemaleAge);
+function diedInCentury(p) {
+  return Math.ceil(p.died / 100);
+}
 
-var filterOnMale = ancestry.filter(male);
-var filterOnFemale = ancestry.filter(female);
-console.log("filter.length m/f:", filterOnMale.length, filterOnFemale.length);
+function groupByCentury(persons) {
+  var result = {};
+  persons.forEach(function (p) {
+    var century = diedInCentury(p);
+    if (!(result[century])) {
+      result[century] = [];
+    }
+    result[century].push(p.died - p.born);
+  });
+  return result;
+}
 
-var extractMaleAge = filterOnMale.map(age);
-var extractFemaleAge = filterOnFemale.map(age);
-console.log("extractMaleAge.length:", extractMaleAge.length);
-console.log("extractFemaleAge.length:", extractFemaleAge.length);
+function calcAveragePerCentury(array) {
+  for (var century in array) {
+    if (array.hasOwnProperty(century)) {
+      array[century] = average(array[century]);
+    }
+  }
+  return array;
+}
+
+console.log(calcAveragePerCentury(groupByCentury(ancestry)));
